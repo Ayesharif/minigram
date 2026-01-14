@@ -4,8 +4,7 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
 import { checkUser, logout } from '../features/actions/authAction';
-import { handleError } from './loaster';
-import { clearMessage } from '../features/slices/authSlice';
+
 export default function NavBar() {
     const [show, setShow]=useState(false);
     const dispatch=useDispatch()

@@ -26,7 +26,7 @@ export default function Profile() {
   // 🔹 Decide which profile & posts to show
   const userProfile = id ? profile : myProfile;
   const posts = id ? profilePosts : myposts;
-
+    const viewFriends=friends.slice(0,3);
   // 🔹 Load profile & posts
   useEffect(() => {
     if (id) {
@@ -89,31 +89,31 @@ export default function Profile() {
 
             {/* Info */}
             <div className="flex flex-col mt-30 gap-3 relative">
-              <p className="poppins-bold text-2xl">{userProfile.username}</p>
-              <p className="text-lg italic">{userProfile.bio}</p>
+              <p className="poppins-bold text-2xl">{userProfile?.username}</p>
+              <p className="text-lg italic">{userProfile?.bio}</p>
 
               <div className="flex items-center gap-2">
                 <MapPin className="w-5" />
-                <p>{userProfile.city}</p>
+                <p>{userProfile?.city}</p>
               </div>
 
               <div className="flex items-center gap-2">
                 <Globe className="w-5" />
-                <p>{userProfile.country}</p>
+                <p>{userProfile?.country}</p>
               </div>
 
               {/* Buttons */}
               <div className="w-full sm:absolute right-5 bottom-0 flex gap-5 justify-end">
 
-                {currentUser._id !== userProfile._id && (
+                {currentUser?._id !== userProfile?._id && (
                   <Button
                     text="Unfollow"
-                    Action={() => handleFollow(userProfile._id)}
+                    Action={() => handleFollow(userProfile?._id)}
                     width="sm:w-30 w-full"
                   />
                 )}
 
-                {currentUser._id === userProfile._id && (
+                {currentUser?._id === userProfile?._id && (
                   <EditIcon onClick={() => setShow(true)} />
                 )}
               </div>
@@ -129,23 +129,23 @@ export default function Profile() {
                 <p className="font-semibold text-xl">Friends</p>
                             <Button Action={()=>setShowFriends(true)} width={"w-fit absolute  right-2"} type={"button"} padding={"px-2"} className='absolute right-0 ' text={"See All"}/>
                 <div className="grid grid-cols-3 gap-3">
-                  {friends?.length > 0 ? (
-                    friends.map((friend) => (
-                      <div key={friend._id}
-                                                      onClick={()=> navigate(`/profile/${friend._id}`)} 
+                  {viewFriends?.length > 0 ? (
+                    viewFriends.map((friend) => (
+                      <div key={friend?._id}
+                                                      onClick={()=> navigate(`/profile/${friend?._id}`)} 
                       className="flex flex-col cursor-pointer items-center bg-white p-2 text-center rounded-lg shadow">
                         {friend?.profileImage?.image ? (
                           <img
-                            src={friend.profileImage.image}
+                            src={friend?.profileImage?.image}
                             className="w-15 h-15 object-cover rounded-full"
                             alt=""
                           />
                         ) : (
                           <div className="w-15 h-15 flex justify-center items-center rounded-full bg-linear-to-r from-purple-600 to-pink-700 text-white">
-                            {getAvatar(friend.username)}
+                            {getAvatar(friend?.username)}
                           </div>
                         )}
-                        <p>{friend.username}</p>
+                        <p>{friend?.username}</p>
                       </div>
                     ))
                   ) : (
@@ -157,11 +157,11 @@ export default function Profile() {
               {/* Posts */}
               <div className="w-full flex flex-col gap-5">
 
-                {currentUser._id === userProfile._id && <CreatPost width="w-full" />}
+                {currentUser?._id === userProfile?._id && <CreatPost width="w-full" />}
 
                 {posts?.length > 0 ? (
                   posts.map((post) => (
-                    <Post key={post._id} width="w-full" post={post} />
+                    <Post key={post?._id} width="w-full" post={post} />
                   ))
                 ) : (
                   <p className="text-center mt-20">No posts available</p>

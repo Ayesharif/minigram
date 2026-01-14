@@ -16,7 +16,7 @@ export const postSlice = createSlice({
     },
     reducers: {
 
-        clearMessage: (state) => {
+        clearPostMessage: (state) => {
             state.message = "";
             state.status = null;
         },
@@ -71,6 +71,8 @@ export const postSlice = createSlice({
                 state.loading = false;
                 action.payload.post.commentsCount=0
                 action.payload.post.likesCount=0
+                console.log(action.payload.post);
+                
                 state.myposts.unshift(action.payload.post);
                 state.feed.unshift(action.payload.post);
                 state.message = action.payload.message;
@@ -101,7 +103,10 @@ export const postSlice = createSlice({
             })
             .addCase(addComment.fulfilled, (state, action) => {
                 state.loading = false;
+console.log(action.payload.comment);
 
+const pp = state.feed.find((p) => p._id === action.payload.postId)
+// console.log(pp);
 const addComm=(post)=>{
     
     if (post) {
@@ -213,5 +218,5 @@ const addComm=(post)=>{
     }
 })
 
-export const { clearMessage } = postSlice.actions;
+export const { clearPostMessage } = postSlice.actions;
 export default postSlice.reducer;

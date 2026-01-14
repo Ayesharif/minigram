@@ -28,7 +28,7 @@ initialState: {
 
     reducers: {
       
-    clearMessage: (state) => {
+    clearAuthMessage: (state) => {
       state.message = "";
       state.status = null;
     },
@@ -55,8 +55,8 @@ builder.addCase(login.pending, (state)=>{
 })
 .addCase(RegisterUser.fulfilled, (state, action)=>{
   state.loading=false;
-  // console.log(action.payload);
-  state.currentUser.email=action.payload.email;
+  console.log(action.payload);
+  state.currentUser=action.payload.email;
   state.message=action.payload.message;
   state.status=action.payload.status;
 })
@@ -86,7 +86,7 @@ builder.addCase(login.pending, (state)=>{
 .addCase(verifyOtp.fulfilled, (state, action)=>{
   state.loading=false;
   // console.log(action.payload);
-//   state.currentUser=action.payload.data
+  state.currentUser=action.payload.data
   state.message=action.payload.message;
   state.status=action.payload.status;
 })
@@ -159,5 +159,5 @@ builder.addCase(login.pending, (state)=>{
 
 },
 });
-export const { setMessage, clearMessage } = authSlice.actions;
+export const { setMessage, clearAuthMessage } = authSlice.actions;
 export default authSlice.reducer;

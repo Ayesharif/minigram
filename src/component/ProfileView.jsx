@@ -17,7 +17,7 @@ export default function ProfileView({openFriends}) {
     const profileImage=myProfile?.profileImage?.image
     const coverImage=myProfile?.coverImage?.image
     
-    const viewFriends=friends.slice(0,2);
+    const viewFriends=friends.slice(0,3);
     useEffect(() => {
         
         const handleResize = () => {
@@ -58,7 +58,7 @@ useEffect(()=>{
         className='object-cover w-full h-full rounded-full'
      src={profileImage} 
      alt="" />):(
-        <div className=' w-full  rounded-full flex justify-center items-center text-white
+        <div className=' w-full h-full rounded-full flex justify-center items-center text-white
           bg-linear-to-r from-purple-600 to-pink-700 text-xl poppins-bold'>MA</div>
      )}
                         </div> 
@@ -88,7 +88,7 @@ useEffect(()=>{
                             <p className='font-semibold'>Friends</p>
 
                             <Button Action={openFriends} width={"w-fit absolute  right-2"} type={"button"} padding={"px-2"} className='absolute right-0 ' text={"See All"}/>
-                                 <div className='grid grid-cols-2 gap-2'>
+                                 <div className='grid grid-cols-3 gap-2'>
                             {viewFriends?.length>0? viewFriends.map((friend, key)=>(
                                 <div
                                 key={key}

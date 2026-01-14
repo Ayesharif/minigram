@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Button from '../component/Button';
 import { checkUser, login } from '../features/actions/authAction';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearMessage } from '../features/slices/authSlice';
+import { clearAuthMessage} from '../features/slices/authSlice';
 import { handleError, handleSuccess } from '../component/loaster';
 import Loader from '../component/Loader';
 
@@ -67,7 +67,7 @@ console.log(loginData);
         
 
         if (status !== null) {
-            dispatch(clearMessage());
+            dispatch(clearAuthMessage());
         }
     }, [status, message, dispatch, navigate]);
 

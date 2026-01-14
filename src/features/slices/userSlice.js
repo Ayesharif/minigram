@@ -16,7 +16,7 @@ export const userSlice = createSlice({
     },
     reducers: {
 
-        clearMessage: (state) => {
+        clearUserMessage: (state) => {
             state.message = "";
             state.status = null;
         },
@@ -104,5 +104,5 @@ export const userSlice = createSlice({
     }
 })
 
-export const { clearMessage } = userSlice.actions;
+export const { clearUserMessage } = userSlice.actions;
 export default userSlice.reducer;

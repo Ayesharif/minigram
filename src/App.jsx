@@ -14,9 +14,12 @@ import ProtectedRoute from './component/protectedRoute'
 import { useDispatch, useSelector } from 'react-redux'
 import { checkUser } from './features/actions/authAction'
 import Loader from './component/Loader'
-import { clearMessage } from './features/slices/userSlice'
+import { clearUserMessage } from './features/slices/userSlice'
 import { handleError, handleSuccess } from './component/loaster'
 import Users from './pages/Users'
+import ResetPassword from './pages/ResetPassword'
+import { clearPostMessage } from './features/slices/postSlice'
+import { clearAuthMessage } from './features/slices/authSlice'
 
 function App() {
 
@@ -30,23 +33,53 @@ useEffect(() => {
   }
 }, [dispatch, authChecked]);
 
-  const {loading, status, message}=useSelector((state)=>state.user)
-  const {loading: authLoading}=useSelector((state)=>state.auth)
 
-  useEffect(()=>{
-    if(status==1){
-      handleSuccess(message)
-    }
-    if(status==0){
-      handleError(message)
-    }
-    if(message !== null){
-      clearMessage()
-    }
-  },[clearMessage,status, message])
+const {
+  loading: postLoading,
+  status: postStatus,
+  message: postMessage
+} = useSelector((state) => state.post);
+
+const {
+  loading: userLoading,
+  status: userStatus,
+  message: userMessage
+} = useSelector((state) => state.user);
+
+const {
+  loading: authLoading,
+  status: authStatus,
+  message: authMessage
+} = useSelector((state) => state.auth);
+
+useEffect(() => {
+  // Post messages
+  if (postStatus === 1) handleSuccess(postMessage);
+  if (postStatus === 0) handleError(postMessage);
+
+  // User messages
+  if (userStatus === 1) handleSuccess(userMessage);
+  if (userStatus === 0) handleError(userMessage);
+
+  // Auth messages
+  if (authStatus === 1) handleSuccess(authMessage);
+  if (authStatus === 0) handleError(authMessage);
+
+  if (postMessage) dispatch(clearPostMessage());
+  if (userMessage) dispatch(clearUserMessage());
+  if (authMessage) dispatch(clearAuthMessage());
+
+}, [
+  postStatus, postMessage,
+  userStatus, userMessage,
+  authStatus, authMessage,
+  dispatch
+]);
+
   return (
     <>
-    {loading&& <Loader/>}
+    {userLoading&& <Loader/>}
+    {postLoading&& <Loader/>}
     {authLoading&& <Loader/>}
 <Routes>
 
@@ -63,6 +96,7 @@ useEffect(() => {
   <Route path='/register' element={<Register/>} />
   <Route path='/forgotpassword' element={<ForgotPassword/>} />
   <Route path='/otpverify' element={<OtpVerification/>} />
+  <Route path='/resetpassword/:email/:otp' element={<ResetPassword/>} />
 </Routes>
     </>
   )

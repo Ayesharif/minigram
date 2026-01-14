@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-const Url = "https://minigram-backend.vercel.app";
+const Url = "http://localhost:3000";
 export const updateProfile = createAsyncThunk('updateProfile', async (data, { rejectWithValue }) => {
 
     try {

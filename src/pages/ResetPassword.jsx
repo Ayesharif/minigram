@@ -1,26 +1,27 @@
 import { ArrowLeftCircle, MessageCircle, Mail, Lock, Shield, Users, Zap } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
-import { clearAuthMessage } from '../features/slices/authSlice';
-import VerifyOtp from '../component/VerifyOtp';
-import { sendOtp, verifyOtp } from '../features/actions/authAction';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { handleError } from '../component/loaster';
+import { reSetPassword } from '../features/actions/authAction';
+import { clearAuthMessage} from '../features/slices/authSlice';
 // import { checkUser, login } from '../features/authAction';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { clearMessage } from '../features/authSlice';
 // import { handleError, handleSuccess } from './tosters';
 // import Loader from './loader';
 
-export default function ForgotPassword() {
+export default function ResetPassword() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-        const [showVerify, setVerify] = useState(false);
-    const [Data, setData] = useState({});
-    const [showPassword, setShowPassword] = useState(false);
+    const { currentUser, status, message,  } = useSelector((state) => state.auth);
+const{otp, email}=useParams()
 
-    const { currentUser, status, message } = useSelector((state) => state.auth);
-
-
+    const [Data, setData] = useState({email:"", otp:""});
+useEffect(()=>{
+if(otp && email){
+    setData({email:email, otp:otp})
+}
+},[])
 
 
     const handleChange = (e) => {
@@ -30,50 +31,29 @@ export default function ForgotPassword() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const emailFormat = /^[a-zA-Z0-9_.+]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+        const passwordValidation = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
 
-        const { email } = Data;
+        const {  password, otp, email } = Data;
 
-        if (!email ) {
-            handleError("Please enter email");
+        if (!password) {
+            handleError("Please email password");
             return;
         }
 
-        if (!emailFormat.test(email)) {
+        if (!passwordValidation.test(password)) {
             handleError("Please enter a valid email address!");
             return;
         }
 
-        dispatch(ForgotPassword(email));
+        dispatch(reSetPassword(Data));
     };
 
-     const handleVerifyOtp = (e) => {
-            e.preventDefault();
-            const { otp } = Data;
-            if (!otp) {
-                handleError("Please enter OTP");
-                return;
-            }
-            // console.log(data);
-            
-            const data = {
-                otp: otp,
-                email: currentUser.email
-            };
-            setTimeout(() => {
-                dispatch(verifyOtp(data));
-            }, 1000);
-        };
-
     useEffect(() => {
-if(status===1 && message==="OTP generated and sent successfully"){
-                dispatch(sendOtp(currentUser.email));
-                setVerify(true);
-}
-if(status===1 && message==="OTP_VERIFIED"){
-              navigate(`/resetpassword/${currentUser.otp}/${currentUser.email}`)       
-                    //    setVerify(true);
-}
+        if (status === 1 && message === "Password updated successful") {
+            navigate('/login');
+
+        }
+
         if (status !== null) {
             dispatch(clearAuthMessage());
         }
@@ -108,7 +88,7 @@ if(status===1 && message==="OTP_VERIFIED"){
 
                         </div>
 
-                       {!showVerify? (<div className="space-y-5">
+                        <div className="space-y-5">
                             {/* Email Input */}
                             <div>
                                 <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -120,6 +100,7 @@ if(status===1 && message==="OTP_VERIFIED"){
                                         type="email"
                                         name='email'
                                         onChange={handleChange}
+                                        value={loginData.email}
                                         className="w-full pl-10 pr-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition"
                                         placeholder="john@example.com"
                                         required
@@ -135,11 +116,9 @@ if(status===1 && message==="OTP_VERIFIED"){
                                 onClick={handleSubmit}
                                 className='w-full bg-gradient-to-r  from-purple-600 to-pink-700 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition transform hover:scale-[1.02] shadow-lg'
                             >
-                                Forgot Password
+                                Reset Password
                             </button>
-                        </div>):
-                        (<VerifyOtp handleChange={handleChange} handleVerifyOtp={handleVerifyOtp} setVerify={setVerify}/>)
-                        }
+                        </div>
 
                         {/* Sign Up Link */}
                         <p className="text-center text-gray-600 text-sm mt-6">
