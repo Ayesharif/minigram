@@ -96,7 +96,7 @@ useEffect(() => {
   <Route path='/register' element={<Register/>} />
   <Route path='/forgotpassword' element={<ForgotPassword/>} />
   <Route path='/otpverify' element={<OtpVerification/>} />
-  <Route path='/resetpassword/:email/:otp' element={<ResetPassword/>} />
+  <Route path='/resetpassword/:otp/:email' element={<ResetPassword/>} />
 </Routes>
     </>
   )

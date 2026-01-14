@@ -111,7 +111,7 @@ export const verifyOtp= createAsyncThunk('verifyOtp', async(data, {rejectWithVal
 export const reSetPassword= createAsyncThunk('reSetPassword', async(data, {rejectWithValue})=>{
          try {
         // console.log(data)
-        const response = await fetch('https://swapy-backend.vercel.app/resetpassword', {
+        const response = await fetch(`${Url}/resetpassword`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

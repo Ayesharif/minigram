@@ -5,11 +5,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { clearAuthMessage } from '../features/slices/authSlice';
 import VerifyOtp from '../component/VerifyOtp';
 import { sendOtp, verifyOtp } from '../features/actions/authAction';
-// import { checkUser, login } from '../features/authAction';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { clearMessage } from '../features/authSlice';
-// import { handleError, handleSuccess } from './tosters';
-// import Loader from './loader';
 
 export default function ForgotPassword() {
     const navigate = useNavigate();
@@ -44,7 +39,7 @@ export default function ForgotPassword() {
             return;
         }
 
-        dispatch(ForgotPassword(email));
+        dispatch(sendOtp(email));
     };
 
      const handleVerifyOtp = (e) => {
@@ -67,7 +62,7 @@ export default function ForgotPassword() {
 
     useEffect(() => {
 if(status===1 && message==="OTP generated and sent successfully"){
-                dispatch(sendOtp(currentUser.email));
+         
                 setVerify(true);
 }
 if(status===1 && message==="OTP_VERIFIED"){

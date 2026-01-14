@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { handleError } from '../component/loaster';
 import { reSetPassword } from '../features/actions/authAction';
 import { clearAuthMessage} from '../features/slices/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
 // import { checkUser, login } from '../features/authAction';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { clearMessage } from '../features/authSlice';
@@ -30,18 +31,21 @@ if(otp && email){
 
 
     const handleSubmit = async (e) => {
+
+        alert(Data.email)
+        alert(Data.otp)
         e.preventDefault();
         const passwordValidation = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
 
         const {  password, otp, email } = Data;
 
         if (!password) {
-            handleError("Please email password");
+            handleError("Please enter password");
             return;
         }
 
         if (!passwordValidation.test(password)) {
-            handleError("Please enter a valid email address!");
+            handleError("Please enter a valid Password!");
             return;
         }
 
@@ -84,7 +88,7 @@ if(otp && email){
                 <div className='lg:w-1/2 w-full max-w-md'>
                     <div className='bg-white rounded-2xl shadow-xl p-8 border border-gray-100'>
                         <div className="text-center mb-8">
-                            <h3 className="text-3xl font-bold text-gray-800 mb-2">Forgot Password</h3>
+                            <h3 className="text-3xl font-bold text-gray-800 mb-2">Reset Password</h3>
 
                         </div>
 
@@ -92,15 +96,15 @@ if(otp && email){
                             {/* Email Input */}
                             <div>
                                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    Email Address
+                                    Password
                                 </label>
                                 <div className="relative">
                                     <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                                     <input
-                                        type="email"
-                                        name='email'
+                                        type="password"
+                                        name='password'
                                         onChange={handleChange}
-                                        value={loginData.email}
+                                        
                                         className="w-full pl-10 pr-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition"
                                         placeholder="john@example.com"
                                         required

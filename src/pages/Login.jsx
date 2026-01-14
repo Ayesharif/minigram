@@ -57,12 +57,9 @@ console.log(loginData);
         }
         if (status === 1 && message === "Login_SUCCESS") {
             navigate('/');
-             handleSuccess("Login Successful")
+
         }
-        if (status === 0 ) {
-            // navigate('/home');
-             handleError(message)
-        }
+
 
         
 
