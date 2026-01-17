@@ -56,6 +56,7 @@ console.log(loginData);
         
         }
         if (status === 1 && message === "Login_SUCCESS") {
+            handleSuccess("Login Successfull")
             navigate('/');
 
         }

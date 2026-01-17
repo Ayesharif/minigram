@@ -10,19 +10,23 @@ import SearchBar from './SearchBar'
 import { useNavigate } from 'react-router-dom'
 
     export default function FriendsList({ setShow, show }) {
-        const [updateComm, setUpdateComm] = useState({})
+        const [myfriends, setMyFriends] = useState([])
         const dispatch=useDispatch()
         const navigate=useNavigate()
 
         const [key, setKey] = useState("")
         const { friends } = useSelector((state) => state.user)
         const { currentUser } = useSelector((state) => state.auth)
-const myfriends= friends.filter((friend)=>friend?.username.toLowerCase().includes(key.toLowerCase()));
-    useEffect(()=>{
-        console.log(key);
-        
-    dispatch(getProfile())
-    },[dispatch, ])
+
+        useEffect(()=>{
+            
+            dispatch(getProfile())
+        },[dispatch ])
+   
+const handleSearch=()=>{
+
+setMyFriends(    friends.filter((friend)=>friend?.username.toLowerCase().includes(key.toLowerCase())));
+}
 
         return (
             <div className={`
@@ -32,7 +36,7 @@ const myfriends= friends.filter((friend)=>friend?.username.toLowerCase().include
                 <div className='relative flex flex-col gap-5'>
                     <div className='flex flex-row items-center justify-between gap-5'>
 
-<SearchBar setKey={setKey} width={"w-full"} padding={"py-1"} />
+<SearchBar setKey={setKey} width={"w-full"} padding={"py-1"} handleSearch={handleSearch}/>
                             <X
                                 onClick={() => setShow(false)}
                                 className='' />

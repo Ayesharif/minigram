@@ -62,7 +62,7 @@ useEffect(() => {
   if (userStatus === 0) handleError(userMessage);
 
   // Auth messages
-  if (authStatus === 1) handleSuccess(authMessage);
+
   if (authStatus === 0) handleError(authMessage);
 
   if (postMessage) dispatch(clearPostMessage());

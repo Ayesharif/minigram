@@ -140,7 +140,7 @@ builder.addCase(login.pending, (state)=>{
   state.loading = false;
   state.IsLogin = false;
   state.currentUser = null;
-  state.authChecked = true; // ✅ ALSO mark resolved
+  state.authChecked = false; // ✅ ALSO mark resolved
 })
 .addCase(updateProfile.pending, (state) => {
             state.loading = true;

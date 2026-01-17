@@ -12,23 +12,27 @@ export default function Users() {
     const [key, setKey]=useState("");
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(getAllUser(key))
+        dispatch(getAllUser())
         console.log(users);
 
-    }, [dispatch, key])
+    }, [dispatch])
 
     const handleFollow =(id)=>{
         console.log(id);
         
         dispatch(toggleFollower(id))
     }
+    
+    const handleSearch=()=>{
+        dispatch(getAllUser(key))
 
+    }
     return (
         <div className='flex flex-col justify-center'>
         <div className='flex items-center mt-5 justify-center'>
            
 
-            <SearchBar setKey={setKey} width={"w-[50%] "} padding={" py-2"}/>
+            <SearchBar setKey={setKey} width={"w-[50%] "} padding={" py-2"} handleSearch={handleSearch}/>
            </div>
             <div className='p-5 md:w-[95%] w-[80%] grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-10  mt-10'>
                 {users?.length>0? users.map((user, key) => (<div key={key} className='sm:w-full  bg-linear-to-r from-purple-600 to-pink-700 text-white p-[2px] rounded-xl shadow-lg'>
